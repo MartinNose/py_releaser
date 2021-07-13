@@ -5,7 +5,6 @@ import json
 import collect
 from github import Github
 usage = "usage: python releaser.py list|pull [-m milestone] [-c config_file] [-L label1,label2,...]"
-
 class PR:
     def __init__(self, repo, number, author, title, content, link):
         self.repo = repo
@@ -46,15 +45,15 @@ def main():
             i += 1
         i += 1
     config = json.load(open(config_path))
-
+    token = config["token"]
     if milestone == None and labels == None:
         print(usage)
 
 
     if args[0] == "list":
-        collect.list(milestone, labels, config["repos"])
+        collect.list(milestone, labels, config["repos"], token)
     elif args[0] == "pull":
-        collect.pull(milestone, labels, config["repos"])
+        collect.pull(milestone, labels, config["repos"], token)
 
 if __name__ == "__main__":
     main()
