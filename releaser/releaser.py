@@ -46,14 +46,18 @@ def main():
         i += 1
     config = json.load(open(config_path))
     token = config["token"]
-    if milestone == None and labels == None:
+    if "-L" not in args:
+        labels = config["labels"]
+        if len(labels) == 0:
+            labels = None
+
+    if milestone == None or labels == None:
         print(usage)
 
-
     if args[0] == "list":
-        collect.list(milestone, labels, config["repos"], token)
+        collect.list_release_note(milestone, labels, config["repos"], token)
     elif args[0] == "pull":
-        collect.pull(milestone, labels, config["repos"], token)
+        collect.create_pull_request(milestone, labels, config["repos"], token)
 
 if __name__ == "__main__":
     main()
