@@ -50,10 +50,10 @@ def get_release_note(milestone : str , labels : list, repos : list, token):
             
             text = text.replace(comment, "")
                 
-            if "no release note" in text or "none" == text.lower():
+            if "no release note" in text.lower() or "none" == text.lower():
                 continue
 
-            rl = ReleaseNote(text, pr, pr.url, repo_name.split("/")[-1])
+            rl = ReleaseNote(text, pr, pr.html_url, repo_name.split("/")[-1])
 
             match = False
             for label in rl.labels:
