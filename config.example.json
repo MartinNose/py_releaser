@@ -1,0 +1,21 @@
+{
+    "repos": ["pingcap/tidb", "tikv/tikv", "pingcap/pd", "pingcap/br", "pingcap/dumpling", "pingcap/tidb-lightning", "pingcap/ticdc"],
+    "labels": ["type/enhancement", "type/bug-fix", "type/new-feature", "compatibility-breaker"],
+    "token": "{github_TOKEN}",
+    "alias": {
+        "pingcap/tics" : "PingCAP/TiFlash", 
+        "pingcap/tidb" : "PingCAP/TiDB", 
+        "tikv/tikv" : "TiKV/TiKV", 
+        "pingcap/pd" : "PD", 
+        "pingcap/br" : "PingCAP/BR", 
+        "pingcap/dumpling" : "PingCAP/Dumpling", 
+        "pingcap/tidb-lightning" : "PingCAP/Lightning", 
+        "pingcap/ticdc" : "PingCAP/TiCDC",
+
+        "compatibility-breaker" : "Compatibility Changes",
+        "type/bug-fix" : "Bug Fixes",
+        "type/enhancement" : "Improvements", 
+        "type/new-feature" : "New Features"
+    },
+    "tools": ["pingcap/br", "pingcap/dumpling", "pingcap/tidb-lightning", "pingcap/ticdc"]
+}
