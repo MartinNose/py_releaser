@@ -181,8 +181,8 @@ def create_pull_request(milestone : str, labels : list, config : dict, token):
     target_repo = g.get_repo("PingCAP/docs")
 
     version = milestone.replace("v", "")
-    # rl = get_release_note(milestone, labels, config, token)
-    # body = get_body(rl, version)
+    rl = get_release_note(milestone, labels, config, token)
+    body = get_body(rl, version)
 
     version += datetime.now().strftime("-%H-%M-%S")
     # create release note md file and commit to ti-srebot/docs branch: update-[milestone]
