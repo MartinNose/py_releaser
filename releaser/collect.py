@@ -178,10 +178,11 @@ def create_pull_request(milestone : str, labels : list, config : dict, token):
     tools = config["tools"]
     g = Github(token)
     dev_repo = g.get_repo("ti-srebot/docs")
+    target_repo = g.get_repo("PingCAP/docs")
 
     version = milestone.replace("v", "")
-    rl = get_release_note(milestone, labels, config, token)
-    body = get_body(rl, version)
+    # rl = get_release_note(milestone, labels, config, token)
+    # body = get_body(rl, version)
 
     version += datetime.now().strftime("-%H-%M-%S")
     # create release note md file and commit to ti-srebot/docs branch: update-[milestone]
@@ -193,7 +194,15 @@ def create_pull_request(milestone : str, labels : list, config : dict, token):
 
 
     sb = dev_repo.get_branch("master")
-    # TODO master fetch upstream
+    # master fetch upstream
+    try:
+        base = dev_repo.get_branch("master")
+        head = target_repo.get_branch("master")
+
+        merge_to_master = dev_repo.merge("master",
+                            head.commit.sha, "merge from upstream master")
+    except Exception as ex:
+        print(ex)
 
     dev_repo.create_git_ref(ref='refs/heads/update-' + version, sha=sb.commit.sha)
     dev_repo.create_file(file_name, commit_msg, body, branch=f"update-{version}")
@@ -203,7 +212,6 @@ def create_pull_request(milestone : str, labels : list, config : dict, token):
 
     # create pull request to pingcap/docs
 
-    target_repo = g.get_repo("PingCAP/docs")
     upstream_pullrequest = target_repo.create_pull(f"releases: add tidb {version} release notes", f"update tidb {milestone} release notes", 'master', 
           '{}:{}'.format('ti-srebot', f"update-{version}"), True)
 
